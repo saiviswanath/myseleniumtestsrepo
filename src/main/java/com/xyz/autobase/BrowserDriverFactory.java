@@ -20,14 +20,17 @@ public class BrowserDriverFactory {
 			System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
 			driver.set(new ChromeDriver());
 			logger.info("Created chrome driver");
+			break;
 		case "firefox": 
 			System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
 			driver.set(new FirefoxDriver());	
 			logger.info("Created firefox driver");
+			break;
 		default:
 			System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
 			driver.set(new ChromeDriver());
 			logger.info("Defaultly Created chrome driver");
+			break;
 		}
 		return driver.get();
 	}

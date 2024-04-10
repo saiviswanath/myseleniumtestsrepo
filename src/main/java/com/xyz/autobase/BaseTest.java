@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
 public class BaseTest {
-	private WebDriver driver;
-	private Logger logger;
+	protected WebDriver driver;
+	protected Logger logger;
 	
 	@Parameters({ "browser" })
 	@BeforeMethod(alwaysRun = true)
@@ -18,6 +18,7 @@ public class BaseTest {
 		BrowserDriverFactory factory = new BrowserDriverFactory(browser, logger);
 		driver = factory.createDriver();
 		logger.info("Driver created");
+		driver.manage().window().maximize();
 	}
 	
 	@AfterMethod(alwaysRun = true)
