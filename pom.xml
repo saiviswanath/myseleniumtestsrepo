@@ -40,7 +40,7 @@
 							<version>3.2.5</version>
 							<configuration>
 								<suiteXmlFiles>
-									<suiteXmlFile>src/test/resources/suites/regression-suite.xml</suiteXmlFile>
+									<suiteXmlFile>suites/regression-suite.xml</suiteXmlFile>
 								</suiteXmlFiles>
 							</configuration>
 						</plugin>
