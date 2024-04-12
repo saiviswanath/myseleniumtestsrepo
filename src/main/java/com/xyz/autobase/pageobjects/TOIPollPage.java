@@ -10,16 +10,18 @@ public class TOIPollPage extends BasePageObject {
 		super(driver, logger);
 	}
 	
-	public void voteAgree() {
+	public TOIVoteResultPage voteAgree() {
 		WebElement radioele = findElement(By.xpath("//form[@id='pollform']/table/tbody/tr[2]/td[@class='normtxt']/input[1]"));
 		click(radioele);
 		textCaptchaProcess();
+		return new TOIVoteResultPage(driver, logger);
 	}
 	
-	public void voteDisAgree() {
+	public TOIVoteResultPage voteDisAgree() {
 		WebElement radioele = findElement(By.xpath("//form[@id='pollform']/table/tbody/tr[2]/td[@class='normtxt']/input[2]"));
 		click(radioele);
 		textCaptchaProcess();
+		return new TOIVoteResultPage(driver, logger);
 	}
 	
 	public void textCaptchaProcess() {

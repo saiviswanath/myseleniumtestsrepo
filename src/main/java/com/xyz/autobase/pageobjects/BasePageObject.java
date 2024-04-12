@@ -11,8 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
 public class BasePageObject {
-	private WebDriver driver;
-	private Logger logger;
+	protected WebDriver driver;
+	protected Logger logger;
 	
 	public BasePageObject(WebDriver driver, Logger logger) {
 		super();
