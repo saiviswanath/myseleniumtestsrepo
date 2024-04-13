@@ -4,6 +4,7 @@ import java.time.Duration;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -20,34 +21,61 @@ public class BasePageObject {
 		this.logger = logger;
 	}
 	
-	public void openPage(String url) {
+	protected void openUrl(String url) {
 		driver.get(url);
 		logger.info("Opening page");
 	}
 	
-	public WebElement findElement(By locator) {
+	protected WebElement find(By locator) {
 		return driver.findElement(locator);
 	}
 	
-	public void sendText(WebElement element, String text) {
-		element.sendKeys(text);
+	protected void type(String text, By locator) {
+		waitForVisibilityOf(locator, Duration.ofSeconds(5));
+		find(locator).sendKeys(text);
 	}
 	
-	public void click(WebElement element) {
-		element.click();
+	public void click(By locator) {
+		waitForVisibilityOf(locator, Duration.ofSeconds(5));
+		find(locator).click();
+		
 	}
 	
-	private void visibilityShown(ExpectedCondition<WebElement> condition, long timeout) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-		wait.until(driver -> condition);
+	public String getCurrentUrl() {
+		return driver.getCurrentUrl();
 	}
 	
-	public void waitForElementToAppear(By locator, long timeout) {
-		visibilityShown(ExpectedConditions.visibilityOfElementLocated(locator), timeout);
+	private void waitFor(ExpectedCondition<WebElement> condition, Duration timeOutInSeconds) {
+		timeOutInSeconds = timeOutInSeconds != null ? timeOutInSeconds : Duration.ofSeconds(30);
+		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+		wait.until(condition);
 	}
 	
-	public void waitForWebElementToAppear(WebElement ele, long timeout) {
-		visibilityShown(ExpectedConditions.visibilityOf(ele), timeout);
+	protected void waitForVisibilityOf(By locator, Duration... timeOutInSeconds) {
+		int attempts = 0;
+		while (attempts < 2) {
+			try {
+				waitFor(ExpectedConditions.visibilityOfElementLocated(locator),
+						(timeOutInSeconds.length > 0 ? timeOutInSeconds[0] : null));
+				break;
+			} catch (StaleElementReferenceException e) {
+			}
+			attempts++;
+		}
+	}
+
+	
+	public void waitForWebElementToAppear(WebElement ele, Duration... timeOutInSeconds) {
+		int attempts = 0;
+		while (attempts < 2) {
+			try {
+				waitFor(ExpectedConditions.visibilityOf(ele),
+						(timeOutInSeconds.length > 0 ? timeOutInSeconds[0] : null));
+				break;
+			} catch (StaleElementReferenceException e) {
+			}
+			attempts++;
+		}
 	}
 	
 }

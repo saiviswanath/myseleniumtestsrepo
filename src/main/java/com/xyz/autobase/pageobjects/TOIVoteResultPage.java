@@ -12,22 +12,17 @@ public class TOIVoteResultPage extends BasePageObject {
 	}
 	
 	public String getResultMessage() {
-		WebElement resultEle = findElement(By.xpath("//div[@id='polldiv']/table/tbody/tr/td/table[1]//td/font/b"));
+		WebElement resultEle = find(By.xpath("//div[@id='polldiv']/table/tbody/tr/td/table[1]//td/font/b"));
 		return resultEle.getText();
 	}
 	
 	public String getPercentAgree() {
-		WebElement resultEle = findElement(By.xpath("//div[@id='polldiv']/table/tbody/tr/td/table[2]/tbody/tr[2]/td[2]//font/optionperc"));
+		WebElement resultEle = find(By.xpath("//div[@id='polldiv']/table/tbody/tr/td/table[2]/tbody/tr[2]/td[2]//font/optionperc"));
 		return resultEle.getText();
 	}
 	
 	public String getPercentDisAgree() {
-		WebElement resultEle = findElement(By.xpath("//div[@id='polldiv']/table/tbody/tr/td/table[2]/tbody/tr[3]/td[2]//font/optionperc"));
+		WebElement resultEle = find(By.xpath("//div[@id='polldiv']/table/tbody/tr/td/table[2]/tbody/tr[3]/td[2]//font/optionperc"));
 		return resultEle.getText();
 	}
-	
-	public String getCurrentUrl() {
-		return driver.getCurrentUrl();
-	}
-
 }
