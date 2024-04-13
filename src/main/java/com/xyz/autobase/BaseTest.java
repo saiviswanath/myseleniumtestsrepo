@@ -1,7 +1,16 @@
 package com.xyz.autobase;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
@@ -14,15 +23,23 @@ public class BaseTest {
 	protected WebDriver driver;
 	protected Logger logger;
 	
+	protected String testSuiteName;
+	protected String testName;
+	protected String testMethodName;
+	
 	@Parameters({ "browser" })
 	@BeforeMethod(alwaysRun = true)
-	public void setUp(@Optional("chrome") String browser, ITestContext ctx) {
+	public void setUp(Method method, @Optional("chrome") String browser, ITestContext ctx) {
 		String testName = ctx.getCurrentXmlTest().getName();
 		logger = LogManager.getLogger(testName);
 		BrowserDriverFactory factory = new BrowserDriverFactory(browser, logger);
 		driver = factory.createDriver();
 		logger.info("Driver created");
 		driver.manage().window().maximize();
+		
+		this.testSuiteName = ctx.getSuite().getName();
+		this.testName = testName;
+		this.testMethodName = method.getName();
 	}
 	
 	@AfterMethod(alwaysRun = true)
@@ -38,5 +55,31 @@ public class BaseTest {
 			{2,"logo.png"},
 			{3,"text.txt"}
 		};
+	}
+	
+	protected void takeScreenshot(String fileName) {
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		String path = System.getProperty("user.dir") 
+				+ File.separator + "test-output" 
+				+ File.separator + "screenshots"
+				+ File.separator + getTodaysDate() 
+				+ File.separator + testSuiteName 
+				+ File.separator + testName
+				+ File.separator + testMethodName 
+				+ File.separator + getSystemTime() 
+				+ " " + fileName + ".png";
+		try {
+			FileUtils.copyFile(scrFile, new File(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static String getTodaysDate() {
+		return (new SimpleDateFormat("yyyyMMdd").format(new Date()));
+	}
+
+	private String getSystemTime() {
+		return (new SimpleDateFormat("HHmmssSSS").format(new Date()));
 	}
 }

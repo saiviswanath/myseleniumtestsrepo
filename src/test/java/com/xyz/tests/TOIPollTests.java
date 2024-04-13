@@ -14,7 +14,9 @@ public class TOIPollTests extends BaseTest {
 	public void pollAgree() {
 		TOIPollPage pollPage = new TOIPollPage(driver, logger);
 		pollPage.openPage(TOI_POLL_URL);
+		takeScreenshot("TOIPollPage");
 		TOIVoteResultPage result = pollPage.voteAgree();
+		takeScreenshot("TOIResultPage");
 		Assert.assertTrue(result.getResultMessage().contains("You have successfully cast your vote"));
 		Assert.assertTrue(result.getPercentAgree().matches("\\d{2}"));
 		Assert.assertTrue(result.getPercentDisAgree().matches("\\d{2}"));
@@ -25,7 +27,9 @@ public class TOIPollTests extends BaseTest {
 	public void pollDisAgree() {
 		TOIPollPage pollPage = new TOIPollPage(driver, logger);
 		pollPage.openPage(TOI_POLL_URL);
+		takeScreenshot("TOIPollPage");
 		TOIVoteResultPage result = pollPage.voteDisAgree();
+		takeScreenshot("TOIResultPage");
 		Assert.assertTrue(result.getResultMessage().contains("You have successfully cast your vote"));
 		Assert.assertTrue(result.getPercentAgree().matches("\\d{2}"));
 		Assert.assertTrue(result.getPercentDisAgree().matches("\\d{2}"));

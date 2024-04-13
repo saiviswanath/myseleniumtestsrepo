@@ -4,6 +4,7 @@ import java.time.Duration;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -76,6 +77,17 @@ public class BasePageObject {
 			}
 			attempts++;
 		}
+	}
+	
+	public void setCookie(Cookie ck) {
+		logger.info("Adding cookie " + ck.getName());
+		driver.manage().addCookie(ck);
+		logger.info("Cookie added");
+	}
+
+	public String getCookie(String name) {
+		logger.info("Getting value of cookie " + name);
+		return driver.manage().getCookieNamed(name).getValue();
 	}
 	
 }
