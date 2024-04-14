@@ -19,7 +19,7 @@ public class ReportListener extends BaseTest implements ITestListener {
 	public void onTestStart(ITestResult result) {
 		// TODO Auto-generated method stub
 		test = extent.createTest(result.getMethod().getMethodName());
-		extentTest.set(test);//unique thread id(ErrorValidationTest)->test
+		extentTest.set(test);
 	}
 
 	@Override
@@ -42,15 +42,9 @@ public class ReportListener extends BaseTest implements ITestListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		
+
 		String filePath = takeScreenshot(result.getMethod().getMethodName());
 		extentTest.get().addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
-		
-		
-		//Screenshot, Attach to report
-		
 		
 	}
 
