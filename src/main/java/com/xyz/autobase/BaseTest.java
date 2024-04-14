@@ -57,7 +57,7 @@ public class BaseTest {
 		};
 	}
 	
-	protected void takeScreenshot(String fileName) {
+	protected String takeScreenshot(String fileName) {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir") 
 				+ File.separator + "test-output" 
@@ -73,6 +73,7 @@ public class BaseTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return path;
 	}
 	
 	private static String getTodaysDate() {

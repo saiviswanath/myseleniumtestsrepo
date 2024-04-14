@@ -79,6 +79,12 @@ public class BasePageObject {
 		}
 	}
 	
+	public void waitForElementToDisappear(WebElement ele) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+		wait.until(ExpectedConditions.invisibilityOf(ele));
+
+	}
+	
 	public void setCookie(Cookie ck) {
 		logger.info("Adding cookie " + ck.getName());
 		driver.manage().addCookie(ck);

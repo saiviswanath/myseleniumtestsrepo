@@ -2,7 +2,8 @@
 <suite name="RegressionSuite" verbose="1" parallel="tests"
 	thread-count="4">
 	<listeners>
-		<listener class-name="com.xyz.autobase.TestListener" />
+		<listener class-name="com.xyz.autobase.listeners.TestListener" />
+		<listener class-name="com.xyz.autobase.listeners.ReportListener" />
 	</listeners>
 	<test name="PollPositiveTests">
 		<parameter name="browser" value="chrome" />
