@@ -1,6 +1,7 @@
 package com.xyz.autobase.pageobjects;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -29,6 +30,10 @@ public class BasePageObject {
 	
 	protected WebElement find(By locator) {
 		return driver.findElement(locator);
+	}
+	
+	protected List<WebElement> findAll(By locator) {
+		return driver.findElements(locator);
 	}
 	
 	protected void type(String text, By locator) {

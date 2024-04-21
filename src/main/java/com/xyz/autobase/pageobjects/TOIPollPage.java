@@ -1,8 +1,11 @@
 package com.xyz.autobase.pageobjects;
 
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class TOIPollPage extends BasePageObject {
 	public TOIPollPage(WebDriver driver, Logger logger) {
@@ -17,6 +20,7 @@ public class TOIPollPage extends BasePageObject {
 	
 	public TOIVoteResultPage voteAgree() {
 		click(By.xpath("//form[@id='pollform']/table/tbody/tr[2]/td[@class='normtxt']/input[1]"));
+		//click(By.cssSelector(".normtxt > input:nth-of-type(1)"));
 		textCaptchaProcess();
 		return new TOIVoteResultPage(driver, logger);
 	}
