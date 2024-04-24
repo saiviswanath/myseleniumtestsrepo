@@ -55,7 +55,7 @@ public class BaseTest {
 		driver.quit();
 		try {
 			snowFlakeconn.close();
-			logger.info("Snowflake Connection closed");
+			logger.info("Snowflake Connection closed!!");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
