@@ -13,6 +13,6 @@ public class DBTest extends BaseTest {
 	@Test
 	public void menuTest() throws SQLException {
 		List<LinkedHashMap<String, String>> list = DBUtils.getMenuDetails(snowFlakeconn);
-		logger.info("LIST: " + list);
+		logger.info("LIST123: " + list);
 	}
 }
