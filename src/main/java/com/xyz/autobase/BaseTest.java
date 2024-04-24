@@ -3,6 +3,8 @@ package com.xyz.autobase;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,14 +24,15 @@ import org.testng.annotations.Parameters;
 public class BaseTest {
 	protected WebDriver driver;
 	protected Logger logger;
+	protected Connection snowFlakeconn;
 	
 	protected String testSuiteName;
 	protected String testName;
 	protected String testMethodName;
 	
-	@Parameters({ "browser" })
+	@Parameters({ "browser"})
 	@BeforeMethod(alwaysRun = true)
-	public void setUp(Method method, @Optional("chrome") String browser, ITestContext ctx) {
+	public void setUp(Method method, @Optional("chrome") String browser, ITestContext ctx) throws SQLException {
 		String testName = ctx.getCurrentXmlTest().getName();
 		logger = LogManager.getLogger(testName);
 		BrowserDriverFactory factory = new BrowserDriverFactory(browser, logger);
@@ -40,12 +43,23 @@ public class BaseTest {
 		this.testSuiteName = ctx.getSuite().getName();
 		this.testName = testName;
 		this.testMethodName = method.getName();
+		
+		DBConnectionFactory snowFlakeconnFac = new DBConnectionFactory("snowflake");
+		snowFlakeconn = snowFlakeconnFac.getConnection();
+		logger.info("Snowflake Connection Created");
 	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		logger.info("Driver closed");
 		driver.quit();
+		try {
+			snowFlakeconn.close();
+			logger.info("Snowflake Connection closed");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@DataProvider(name="files")
