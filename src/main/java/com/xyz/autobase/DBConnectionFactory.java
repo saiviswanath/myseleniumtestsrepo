@@ -18,7 +18,7 @@ public class DBConnectionFactory {
 		case "snowflake":
 			Properties properties = new Properties();
 		    properties.put("user", "saiviswanathpalaparthi");     // replace "" with your username
-		    properties.put("password", "Shradha139#"); // replace "" with your password
+		    properties.put("password", ""); // replace "" with your password
 		    properties.put("account", "xogzozv-ct67552");  // replace "" with your account name
 		    properties.put("db", "TASTY_BYTES_SAMPLE_DATA");       // replace "" with target database name
 		    properties.put("schema", "RAW_POS");   // replace "" with target schema name
