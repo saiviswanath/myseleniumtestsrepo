@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnectionFactory {
-	private ThreadLocal<Connection> conn = new ThreadLocal<>();
+	//private ThreadLocal<Connection> conn = new ThreadLocal<>();
+	private Connection conn;
 	private String db;
 	
 	public DBConnectionFactory(String db) {
@@ -18,15 +19,15 @@ public class DBConnectionFactory {
 		case "snowflake":
 			Properties properties = new Properties();
 		    properties.put("user", "saiviswanathpalaparthi");     // replace "" with your username
-		    properties.put("password", ""); // replace "" with your password
+		    properties.put("password", "Shradha139#"); // replace "" with your password
 		    properties.put("account", "xogzozv-ct67552");  // replace "" with your account name
 		    properties.put("db", "TASTY_BYTES_SAMPLE_DATA");       // replace "" with target database name
 		    properties.put("schema", "RAW_POS");   // replace "" with target schema name
 		    //properties.put("tracing", "on");
 			String jdbcUrl = "jdbc:snowflake://xogzozv-ct67552.snowflakecomputing.com";
-			conn.set(DriverManager.getConnection(jdbcUrl, properties));
+			conn = DriverManager.getConnection(jdbcUrl, properties);
 			break;
 		}
-		return conn.get();
+		return conn;
 	}
 }

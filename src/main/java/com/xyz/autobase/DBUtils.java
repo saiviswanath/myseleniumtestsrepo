@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DBUtils {
-	public static List<LinkedHashMap<String, String>> getMenuDetails(Connection conn) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("select * from menu limit 5");
+	public static List<LinkedHashMap<String, String>> getMenuDetails(Connection conn, String sql) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet res = stmt.executeQuery();
 		List<LinkedHashMap<String, String>> list = new ArrayList<>();
 		while (res.next()) {
