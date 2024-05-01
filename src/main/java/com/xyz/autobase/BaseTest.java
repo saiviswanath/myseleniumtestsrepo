@@ -1,12 +1,14 @@
 package com.xyz.autobase;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -18,8 +20,6 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 
 public class BaseTest {
 	protected WebDriver driver;
@@ -30,14 +30,27 @@ public class BaseTest {
 	protected String testName;
 	protected String testMethodName;
 	
-	@Parameters({ "browser"})
+	//@Parameters({ "browser"})
 	@BeforeMethod(alwaysRun = true)
-	public void setUp(Method method, @Optional("chrome") String browser, ITestContext ctx) throws SQLException {
+	public void setUp(Method method, 
+			//@Optional("chrome") String browser, 
+			ITestContext ctx) throws SQLException, IOException {
+		
+		//Props
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")
+				+ "//src//main//resources//app.properties");
+		prop.load(fis);
+
+		String browserName = System.getProperty("browser")!=null ? System.getProperty("browser") :prop.getProperty("browser");
+		
 		String testName = ctx.getCurrentXmlTest().getName();
 		logger = LogManager.getLogger(testName);
-		BrowserDriverFactory factory = new BrowserDriverFactory(browser, logger);
+		
+		BrowserDriverFactory factory = new BrowserDriverFactory(browserName, logger);
 		driver = factory.createDriver();
 		logger.info("Driver created");
+		
 		driver.manage().window().maximize();
 		
 		this.testSuiteName = ctx.getSuite().getName();

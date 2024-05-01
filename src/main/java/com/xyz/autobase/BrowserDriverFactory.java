@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class BrowserDriverFactory {
 	private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 	private String browser;
@@ -17,12 +19,14 @@ public class BrowserDriverFactory {
 	public WebDriver createDriver() {
 		switch(browser) {
 		case "chrome": 
-			System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+			//System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+			WebDriverManager.chromedriver().setup();
 			driver.set(new ChromeDriver());
 			logger.info("Created chrome driver");
 			break;
 		case "firefox": 
-			System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+			//System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
+			WebDriverManager.firefoxdriver().setup();
 			driver.set(new FirefoxDriver());	
 			logger.info("Created firefox driver");
 			break;
